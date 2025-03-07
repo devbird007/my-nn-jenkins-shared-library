@@ -1,8 +1,8 @@
-def call() {
+def call(String imageName) {
     echo "building the docker image..."
     withCredentials([usernamePassword(credentialsId: 'dockerhub-repo', passwordVariable: 'PASS', usernameVariable: 'USER')]) {
-        sh 'docker build -t mannyops/pipeline-demo-app:groovy1.0 .'
+        sh "docker build -t $imageName ."
         sh "echo $PASS | docker login -u $USER --password-stdin"
-        sh 'docker push mannyops/pipeline-demo-app:groovy1.0'
+        sh "docker push $imageName"
     }
 }
